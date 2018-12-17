@@ -3,6 +3,18 @@ const router = express.Router();
 const pool = require('../modules/pool');
 
 
+router.get('/', (req,res) => {
+    let queryString =  `SELECT * FROM "projects" ORDER BY "id" ASC;`
+    pool.query(queryString).then((result)=> {
+        res.send(result.rows);
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+})
+
+
+
 router.post('/', (req, res) => {
    let newPr = req.body;
    console.log('checking', req.body.github);

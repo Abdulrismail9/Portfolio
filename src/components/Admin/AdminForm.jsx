@@ -46,9 +46,9 @@ class AdminForm extends Component {
                 </span>
                 <div>
                     <input type='text' name='gitHub' placeholder='github URL' onChange={this.handleChangeFor} value={this.state.gitHub} />
+                    <input type='text' name='thumbnail' placeholder='github URL' onChange={this.handleChangeFor} value={this.state.thumbnail} />
                     <input type='text' name='website' placeholder='Website URL' onChange={this.handleChangeFor} value={this.state.website} />
                     <input type='text' name='description' placeholder='Description' onChange={this.handleChangeFor} value={this.state.description} />
-                    <input type='text' name='thumbnail' placeholder='thumbnail' onChange={this.handleChangeFor} value={this.state.thumbnail} />
                 </div>
                 <button onClick={this.addProject}>Submit</button>
             </div>
