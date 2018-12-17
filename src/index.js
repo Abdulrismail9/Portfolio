@@ -10,16 +10,23 @@ import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
+import Axios from '../node_modules/axios';
 
 // Create the rootSaga generator function
 function* rootSaga() {
-    yield takeEvery('ADD_PROJECT', addProject)
+    yield takeEvery('ADD_NEW', addProject)
+    
 }
 
 function* addProject(action) {
     console.log('testing adding to database', action.payload)
     try{
-        
+        yield call(Axios.post, '/projects', action.payload)
+        // yield put({type: 'SET_PROJECTS' });
+        console.log('testing', action.payload)
+    }
+    catch(error){
+        console.log('error in post', error)
     }
 }
 // Create sagaMiddleware

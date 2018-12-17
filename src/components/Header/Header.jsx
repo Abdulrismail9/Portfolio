@@ -6,8 +6,8 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <img alt='' hieght='150px' width='150px'src={`/images/Abdul_Ismail.jpg`} />
-       <p>Abdul Rahman Ismail</p>
+        <img alt='' width='150px' src={`/images/Abdul_Ismail.jpg`} />
+        <p>Abdul Rahman Ismail</p>
       </div>
     );
   }
