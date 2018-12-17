@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+
 
 const newProject = {
     name: '',
@@ -15,6 +22,15 @@ class AdminForm extends Component {
 
     state = newProject;
 
+    componentDidMount () {
+        this.props.dispatch({type: 'FETCH_PROJECTS' })
+    }
+
+    deleteProjects = () => {
+        console.log('in Delete function');
+        this.props.dispatch({ type: 'DELETE_PROJECT', payload: this.props.reduxStore.projects.id })
+    }
+
     handleChangeFor = (event) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -23,7 +39,6 @@ class AdminForm extends Component {
 
     addProject = () => {
         this.props.dispatch({ type: 'ADD_NEW', payload: this.state })
-        this.setState(newProject);
     }
 
     render() {
@@ -51,6 +66,28 @@ class AdminForm extends Component {
                     <input type='text' name='description' placeholder='Description' onChange={this.handleChangeFor} value={this.state.description} />
                 </div>
                 <button onClick={this.addProject}>Submit</button>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>
+                                Name
+                            </TableCell>
+                            <TableCell>
+                                Delete
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    {this.props.reduxStore.projects.map((project) => {
+                        return(
+                            <TableBody key={project.id}>
+                            <TableRow>
+                                <TableCell>{project.name}</TableCell>
+                                <TableCell><Button onClick={this.deleteProjects}>delete</Button></TableCell>
+                            </TableRow>
+                            </TableBody>
+                        )
+                    })}
+                </Table>
             </div>
         );
     }

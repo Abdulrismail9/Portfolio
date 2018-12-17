@@ -4,7 +4,8 @@ const pool = require('../modules/pool');
 
 
 router.get('/', (req,res) => {
-    let queryString =  `SELECT * FROM "projects" ORDER BY "id" ASC;`
+    let queryString =  `SELECT projects.name, projects.description, projects.github, projects.thumbnail, projects.website, projects.date_completed, tags.name as tag
+    FROM projects JOIN tags ON projects.tag_id = tags.id ORDER BY projects.date_completed DESC;`
     pool.query(queryString).then((result)=> {
         res.send(result.rows);
     })
@@ -31,6 +32,19 @@ router.post('/', (req, res) => {
             res.sendStatus(500);
         })
 
+})
+
+router.delete('/:id', (req,res) => {
+    console.log('in delete route')
+    elementId = req.params.id;
+    let queryText = 'DELETE FROM "projects" WHERE "id"=$1;'
+    pool.query(queryText, [elementId])
+    .then((result) => {
+        console.log('checking delete route', result);
+    })
+    .catch((error) => {
+        console.log('something wrong with delete route', error);
+    })
 })
 
 

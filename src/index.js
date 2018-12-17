@@ -15,15 +15,27 @@ import Axios from '../node_modules/axios';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_PROJECTS', fetchProjects)
+    yield takeEvery('DELETE_PROJECTS', deleteProjects)
     yield takeEvery('ADD_NEW', addProject)
     
 }
+
+function* deleteProjects(action) {
+    try{
+        yield call(Axios.delete, `/projects/${action.payload}`)
+        yield put({type: 'FETCH_PROJECTS' });
+    }
+    catch(error) {
+        console.log('delete error', error );
+    }
+ }
 
 function* fetchProjects() {
     console.log('in fetchProjects');
     try{
        let results = yield call(Axios.get, '/projects')
         yield put({type: 'SET_PROJECTS' , payload: results });
+
     }
     catch(error) {
         console.log('error in get', error );
